@@ -3,8 +3,9 @@ package com.example.SpringCurso1.controller;
 import com.example.SpringCurso1.entities.Book;
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.SpringCurso1.repository.BookRepository;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 public class BookController {
     //Atributos
+    private final Logger log = LoggerFactory.getLogger(BookController.class);
     private BookRepository repository;
 
     //Constructor
@@ -36,14 +38,18 @@ public class BookController {
      * POST
      * Metodo que recibe un libro y lo guarda en la base de datos
      * @param book
-     * @param headers
      * @return
      */
     @PostMapping("/api/books")
-    public Book Create(@RequestBody Book book, @RequestHeader HttpHeaders headers){
-        System.out.println(headers.get("User-Agent"));
+    public ResponseEntity<Book>  Create(@RequestBody Book book){
+        if(book.getId() != null){
+            //Si el id del libro es diferente de null, significa que el libro ya existe en la base de datos
+            log.warn("Trying to create a new book with existent id");
+            return ResponseEntity.badRequest().build();
+        }
         //Guardar el libro recibido por parametros en la base de datos
-        return repository.save(book);
+        Book result = repository.save(book);
+        return ResponseEntity.ok(result);
     }
 
     //Read
@@ -80,8 +86,39 @@ public class BookController {
 
         // return optBook.orElse(null);
     }
+
     //Update
-    
+    @PutMapping("/api/books")
+    public ResponseEntity<Book> update(@RequestBody Book book){
+        if(book.getId() == null){
+            //Si no tiene id quiere decir que es para crear un libro
+            log.warn("Trying to update a book without id");
+            return ResponseEntity.badRequest().build();
+        }
+        if(!repository.existsById(book.getId())){
+            log.warn("Trying to update a book that does not exist");
+            return ResponseEntity.notFound().build();
+        }
+
+        Book result = repository.save(book);
+        return ResponseEntity.ok(result);
+    }
 
     //Delete
+    @DeleteMapping("api/books/{id}")
+    public ResponseEntity<Book> delete(@PathVariable Long id){
+        if(!repository.existsById(id)){
+            log.warn("Trying to delete a book that does not exist");
+            return ResponseEntity.notFound().build();
+        }
+        repository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+    
+    @DeleteMapping("api/books")
+    public ResponseEntity<Book> deleteAll(){
+        repository.deleteAll();
+        return ResponseEntity.ok().build();
+    }
+
 }
