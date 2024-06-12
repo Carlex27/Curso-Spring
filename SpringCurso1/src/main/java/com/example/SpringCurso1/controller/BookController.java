@@ -1,6 +1,8 @@
 package com.example.SpringCurso1.controller;
 
 import com.example.SpringCurso1.entities.Book;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -41,6 +43,7 @@ public class BookController {
      * @return
      */
     @PostMapping("/api/books")
+    @Operation(summary = "Create a new book", description = "Create a new book in the database")
     public ResponseEntity<Book>  Create(@RequestBody Book book){
         if(book.getId() != null){
             //Si el id del libro es diferente de null, significa que el libro ya existe en la base de datos
@@ -62,6 +65,8 @@ public class BookController {
      * ArrayList<Book>
      * @return
      */
+
+
     @GetMapping("/api/books")
     public List<Book> FindAll(){
         return repository.findAll();
@@ -120,5 +125,6 @@ public class BookController {
         repository.deleteAll();
         return ResponseEntity.ok().build();
     }
+
 
 }
