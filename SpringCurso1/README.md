@@ -21,3 +21,6 @@ El acceso se puede realizar mediante Postman o navegador
    5. Eliminar un libro
    6. Eliminar todos los libros
 4. BookService
+   1. BookServiceCalculator
+      1. Calcular el precio de un libro
+s
