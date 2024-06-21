@@ -1,6 +1,6 @@
-package com.example.Cifrado2;
+package com.example.Cifrado2.repositories;
 
-import com.example.Cifrado2.User;
+import com.example.Cifrado2.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

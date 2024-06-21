@@ -1,4 +1,4 @@
-package com.example.Cifrado2;
+package com.example.Cifrado2.entities;
 
 import jakarta.persistence.*;
 
