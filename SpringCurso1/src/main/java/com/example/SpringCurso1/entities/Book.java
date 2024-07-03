@@ -6,10 +6,11 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "books")
+@Getter
+@Setter
 public class Book {
     // Atributtes
     @Id
