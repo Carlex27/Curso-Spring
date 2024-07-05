@@ -165,20 +165,12 @@ public class CarServiceImpl implements CarService{
     }
 
     @Override
-    public List<Car> findByAvailableTrue(Boolean available) {
+    public List<Car> findByAvailableTrue() {
         log.info("Executing findByAvailableTrue method");
-        if (available == null) {
-            log.warning("The available is null");
-            return new ArrayList<>();
-        }
-        return carRepository.findByAvailableTrue(available);
+        return carRepository.findByAvailableTrue();
     }
 
-    @Override
-    public Long deleteByAllAvailableFalse() {
-        log.info("Executing deleteByAllAvailableFalse method");
-        return carRepository.deleteByAllAvailableFalse();
-    }
+
 
     //Car validation
     private boolean carValidation(Car car){

@@ -14,7 +14,6 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     List<Car> findByYear(Integer year);
     List<Car> findByManuFacturer(String manuFacturer);
     List<Car> findByModel(String model);
-    List<Car> findByAvailableTrue(Boolean available);
-    Long deleteByAllAvailableFalse();
+    List<Car> findByAvailableTrue();
 
 }
