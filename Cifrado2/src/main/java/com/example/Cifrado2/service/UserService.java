@@ -1,10 +1,11 @@
-package com.example.SpringSecurity.service;
+package com.example.Cifrado2.service;
 
-import com.example.SpringSecurity.entities.User;
-import com.example.SpringSecurity.entities.UserDetails2;
-import com.example.SpringSecurity.repositories.UserRepository;
+import com.example.Cifrado2.entities.User;
+import com.example.Cifrado2.repositories.UserRepository;
+import com.example.Cifrado2.security.User_details;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,15 +17,16 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 @Builder
+@NoArgsConstructor
 public class UserService implements UserDetailsService {
     private UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> userDetails = userRepository.findByUsername(username);
         //Converting userDetail to userDetails
-        return userDetails.map(UserDetails2::new)
+        return userDetails.map(User_details::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found" + username));
 
     }
@@ -32,9 +34,5 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return "User added succesfully";
-    }
-    public User findUserByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 }

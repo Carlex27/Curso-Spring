@@ -1,6 +1,5 @@
 package com.example.Cifrado2.entities;
 
-import com.example.Cifrado2.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,12 +24,11 @@ public class User implements UserDetails {
     private String username;
     private String email;
     private String password;
+    private String role;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority(role));
     }
 
     @Override

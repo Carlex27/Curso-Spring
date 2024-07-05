@@ -35,8 +35,9 @@ public class UserController {
 
     @GetMapping("/user/userProfile")
     @PreAuthorize("hasAuthority('USER')")
-    public String userProfile(){
-        return "Welcome to UserProfile endpoint";
+    public User userProfile(Authentication authentication){
+        String username = authentication.getName();
+        return service.findUserByUsername(username);
     }
 
     @GetMapping("/admin/adminProfile")
