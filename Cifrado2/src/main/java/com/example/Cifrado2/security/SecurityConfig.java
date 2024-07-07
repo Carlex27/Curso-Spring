@@ -20,16 +20,17 @@ public class SecurityConfig {
     private JwtAuthFilter jwtAuthFilter;
     private AuthenticationProvider authenticationProvider;
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/welcome",
-                        "/api/v1/addNewUser", "/api/v1/generateToken").permitAll())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/user/addNewUser",
+                        "/api/auth/generateToken").permitAll())
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/v1/user/**").authenticated())
+                        auth.requestMatchers("/api/user/**").authenticated())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/admin/**").authenticated())
+                        .requestMatchers("/api/admin/**").authenticated())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/car/**").authenticated())
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
