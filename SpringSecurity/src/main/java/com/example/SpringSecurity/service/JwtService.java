@@ -1,6 +1,6 @@
 package com.example.SpringSecurity.service;
 
-import com.example.SpringSecurity.entities.UserDetails2;
+import com.example.SpringSecurity.entities.MyUserDetail;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -34,7 +34,7 @@ public class  JwtService {
     }
 
     public String generateToken(String username){
-        return generateToken(UserDetails2.builder().username(username).build());
+        return generateToken(MyUserDetail.builder().username(username).build());
     }
     public String generateToken(UserDetails userDetails){
         return generateToken(new HashMap<>(), userDetails);

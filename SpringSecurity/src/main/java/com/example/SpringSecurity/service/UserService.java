@@ -1,7 +1,7 @@
 package com.example.SpringSecurity.service;
 
 import com.example.SpringSecurity.entities.User;
-import com.example.SpringSecurity.entities.UserDetails2;
+import com.example.SpringSecurity.entities.MyUserDetail;
 import com.example.SpringSecurity.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +24,7 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         Optional<User> userDetails = userRepository.findByUsername(username);
         //Converting userDetail to userDetails
-        return userDetails.map(UserDetails2::new)
+        return userDetails.map(MyUserDetail::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found" + username));
 
     }
@@ -38,3 +38,4 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 }
+

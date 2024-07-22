@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDetails2 implements UserDetails {
+public class MyUserDetail implements UserDetails {
     private String username;
     private String password;
     private List<GrantedAuthority> authorities;
 
-    public UserDetails2(User user){
+    public MyUserDetail(User user){
         username = user.getUsername();
         password = user.getPassword();
         authorities = Arrays.stream(user.getRole().split(","))
