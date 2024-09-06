@@ -1,6 +1,7 @@
 package com.example.Oauth2_.Spring.config;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,9 +15,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Bean
     public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
-                .securityMatcher(new AntPathRequestMatcher("/**"))
+                .securityMatcher(new AntPathRequestMatcher("/**")) // Esto representa el patron de rutas global que se interceptaran por este bean
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/", "/login**").permitAll()
                         .anyRequest().authenticated()
